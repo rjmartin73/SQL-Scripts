@@ -1,0 +1,17 @@
+SET ANSI_NULLS ON;
+SET QUOTED_IDENTIFIER ON;
+SET ANSI_PADDING ON;
+GO
+IF(NOT EXISTS(SELECT * FROM sys.tables WHERE name = 'FileFormatNameSpace' AND schema_id=1))
+CREATE TABLE [dbo].[FileFormatNameSpace](
+	[NameSpaceID] [int] IDENTITY(1,1) NOT NULL,
+	[BaseFileFormatID] [int] NOT NULL,
+	[Prefix] [varchar](100) NOT NULL,
+	[URI] [varchar](max) NOT NULL,
+ CONSTRAINT [PK_FileFormatNameSpcae] PRIMARY KEY CLUSTERED 
+(
+	[NameSpaceID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+CONSTRAINT [FK_FileFormatNameSpcae_FileFormat] FOREIGN KEY([BaseFileFormatID])
+REFERENCES [dbo].[FileFormat] ([BaseFileFormatID])
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY];
